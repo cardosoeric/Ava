@@ -1,0 +1,417 @@
+# API REST de Missões Espaciais
+
+API REST desenvolvida em PHP utilizando o Slim Framework para gerenciamento de missões espaciais históricas e futuras.
+
+O projeto permite realizar operações de CRUD (Create, Read, Update e Delete) sobre missões espaciais, utilizando HTTP, REST e JSON.
+
+---
+
+## 1. Identificação
+
+**Nome:** Eric De Oliveira Cardoso
+**Curso:**  Informatica para internet
+**Unidade Curricular:** Desenvolver Serviços Web
+
+---
+
+## 2. Descrição do Projeto
+
+Este projeto consiste no desenvolvimento de uma API REST de Missões Espaciais.
+
+A API permite:
+
+* Verificar o funcionamento do serviço;
+* Listar todas as missões;
+* Buscar uma missão pelo ID;
+* Cadastrar uma nova missão;
+* Atualizar uma missão existente;
+* Remover uma missão.
+
+Os dados das missões são inicialmente armazenados em um array PHP para realização dos testes.
+
+---
+
+## 3. Tecnologias Utilizadas
+
+* PHP
+* Slim Framework
+* Composer
+* JSON
+* HTTP
+* REST API
+* Postman
+
+---
+
+## 4. Estrutura do Projeto
+
+```text
+Ava/
+│
+├── composer.json
+│
+├── vendor/
+│   └── autoload.php
+│
+└── public/
+    └── index.php
+```
+
+---
+
+## 5. Como Clonar o Projeto
+
+Clone o repositório utilizando:
+
+```bash
+git clone URL_DO_REPOSITORIO
+```
+
+Depois entre na pasta:
+
+```bash
+cd Ava
+```
+
+---
+
+## 6. Como Instalar as Dependências
+
+Execute o Composer na pasta principal do projeto:
+
+```bash
+composer install
+```
+
+O comando instalará as dependências necessárias do Slim Framework.
+
+---
+
+## 7. Como Executar o Projeto
+
+Entre na pasta principal:
+
+```bash
+cd /home/senac/Ava
+```
+
+Execute o servidor embutido do PHP:
+
+```bash
+php -S localhost:8080 -t public
+```
+
+A API ficará disponível em:
+
+```text
+http://localhost:8080
+```
+
+---
+
+# 8. Documentação dos Endpoints
+
+## GET /status
+
+### Objetivo
+
+Verificar se a API está funcionando corretamente.
+
+### Requisição
+
+```http
+GET http://localhost:8080/status
+```
+
+### Resposta
+
+Status: `200 OK`
+
+```json
+{
+    "status": "ok"
+}
+```
+
+---
+
+## GET /missoes
+
+### Objetivo
+
+Listar todas as missões espaciais cadastradas.
+
+### Requisição
+
+```http
+GET http://localhost:8080/missoes
+```
+
+### Resposta
+
+Status: `200 OK`
+
+```json
+[
+    {
+        "id": 1,
+        "nome": "Apollo 11",
+        "ano": 1969,
+        "agencia": "NASA",
+        "status": "Concluída"
+    },
+    {
+        "id": 2,
+        "nome": "Voyager 1",
+        "ano": 1977,
+        "agencia": "NASA",
+        "status": "Em operação"
+    }
+]
+```
+
+---
+
+## GET /missoes/{id}
+
+### Objetivo
+
+Buscar uma missão específica pelo seu ID.
+
+### Requisição
+
+```http
+GET http://localhost:8080/missoes/1
+```
+
+### Resposta
+
+Status: `200 OK`
+
+```json
+{
+    "id": 1,
+    "nome": "Apollo 11",
+    "ano": 1969,
+    "agencia": "NASA",
+    "status": "Concluída"
+}
+```
+
+### Caso a missão não exista
+
+Status: `404 Not Found`
+
+```json
+{
+    "erro": "Missão não encontrada"
+}
+```
+
+---
+
+## POST /missoes
+
+### Objetivo
+
+Cadastrar uma nova missão espacial.
+
+### Requisição
+
+```http
+POST http://localhost:8080/missoes
+```
+
+### Body
+
+Utilize:
+
+Body → raw → JSON
+
+```json
+{
+    "nome": "Artemis III",
+    "ano": 2027,
+    "agencia": "NASA",
+    "status": "Planejada"
+}
+```
+
+### Resposta
+
+Status: `201 Created`
+
+```json
+{
+    "id": 6,
+    "nome": "Artemis III",
+    "ano": 2027,
+    "agencia": "NASA",
+    "status": "Planejada"
+}
+```
+
+---
+
+## PUT /missoes/{id}
+
+### Objetivo
+
+Atualizar uma missão existente.
+
+### Requisição
+
+```http
+PUT http://localhost:8080/missoes/3
+```
+
+### Body
+
+```json
+{
+    "nome": "Artemis III",
+    "ano": 2027,
+    "agencia": "NASA",
+    "status": "Em preparação"
+}
+```
+
+### Resposta
+
+Status: `200 OK`
+
+```json
+{
+    "id": 3,
+    "nome": "Artemis III",
+    "ano": 2027,
+    "agencia": "NASA",
+    "status": "Em preparação"
+}
+```
+
+### Caso a missão não exista
+
+Status: `404 Not Found`
+
+```json
+{
+    "erro": "Missão não encontrada"
+}
+```
+
+---
+
+## DELETE /missoes/{id}
+
+### Objetivo
+
+Remover uma missão cadastrada.
+
+### Requisição
+
+```http
+DELETE http://localhost:8080/missoes/5
+```
+
+### Resposta
+
+Status: `204 No Content`
+
+Quando a missão é removida corretamente, a API não retorna conteúdo no corpo da resposta.
+
+### Caso a missão não exista
+
+Status: `404 Not Found`
+
+```json
+{
+    "erro": "Missão não encontrada"
+}
+```
+
+---
+
+# 9. Testes no Postman
+
+Os seguintes endpoints foram preparados para serem testados no Postman:
+
+| Método | Endpoint        | Função           |
+| ------ | --------------- | ---------------- |
+| GET    | `/status`       | Verificar API    |
+| GET    | `/missoes`      | Listar missões   |
+| GET    | `/missoes/{id}` | Buscar missão    |
+| POST   | `/missoes`      | Cadastrar missão |
+| PUT    | `/missoes/{id}` | Atualizar missão |
+| DELETE | `/missoes/{id}` | Remover missão   |
+
+---
+
+# 10. Códigos HTTP Utilizados
+
+| Código            | Significado                      |
+| ----------------- | -------------------------------- |
+| `200 OK`          | Requisição realizada com sucesso |
+| `201 Created`     | Recurso criado com sucesso       |
+| `204 No Content`  | Recurso removido com sucesso     |
+| `400 Bad Request` | Dados obrigatórios não enviados  |
+| `404 Not Found`   | Missão não encontrada            |
+
+---
+
+# 11. Estrutura dos Dados
+
+Cada missão possui os seguintes atributos:
+
+```json
+{
+    "id": 1,
+    "nome": "Apollo 11",
+    "ano": 1969,
+    "agencia": "NASA",
+    "status": "Concluída"
+}
+```
+
+### Campos
+
+* **id:** identificador único da missão;
+* **nome:** nome da missão espacial;
+* **ano:** ano da missão;
+* **agencia:** agência responsável;
+* **status:** situação atual da missão.
+
+---
+
+# 12. Evidências dos Testes
+
+As evidências dos testes devem ser adicionadas nesta seção após a realização dos testes no Postman.
+
+Exemplos de testes:
+
+* GET `/status`
+* GET `/missoes`
+* GET `/missoes/1`
+* POST `/missoes`
+* PUT `/missoes/3`
+* DELETE `/missoes/5`
+
+Adicione aqui as capturas de tela dos testes realizados no Postman.
+
+---
+
+# 13. Conclusão
+
+A API foi desenvolvida utilizando PHP e Slim Framework, aplicando conceitos de serviços web, REST, HTTP, JSON, parâmetros de rota e operações CRUD.
+
+O projeto permite o gerenciamento básico de missões espaciais através de diferentes métodos HTTP.
+
+---
+
+# Autor
+
+**Eric De Oliveira Cardoso**
+
+**Curso:** Informatica para internet
+
+**Unidade Curricular:** Desenvolver Serviços Web
